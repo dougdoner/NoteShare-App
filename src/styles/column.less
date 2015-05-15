@@ -1,0 +1,51 @@
+@phone: ~"all and (max-width: 600px)";
+@tablet: ~"all and (min-width: 600px)";
+@desktop: ~"all and (min-width: 800px)";
+
+// functions
+.columns(@columns, @paddingRight:2) {
+  // last number can be changed depending on the size of your grid, if you are using one. Second number in equation is to account for gutters
+  width: percentage((-20 + ((60 * @columns) + (20 * @columns))) / 960);
+  // used padding-right instead of margin-right to utilize box-border
+  padding-right: percentage(@paddingRight / 100);
+  @media @phone {
+    width: 100%;
+  }
+}
+
+.columns-1 {
+  .columns(1, 0);
+}
+.columns-2 {
+  .columns(2, 0);
+}
+.columns-3 {
+  .columns(3, 0);
+}
+.columns-4 {
+  .columns(4, 0);
+}
+.columns-5 {
+  .columns(5, 0);
+}
+.columns-6 {
+  .columns(6, 0);
+}
+.columns-7 {
+  .columns(7, 0);
+}
+.columns-8 {
+  .columns(8, 0);
+}
+.columns-9 {
+  .columns(9, 0);
+}
+.columns-10 {
+  .columns(10, 0);
+}
+.columns-11 {
+  .columns(11, 0);
+}
+.columns-12 {
+  .columns(12, 0);
+}
