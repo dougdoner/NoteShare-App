@@ -2,11 +2,21 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{{title}}</title>
+        <title>{{title}}{{#pageTitle}} - {{this}}{{/pageTitle}}</title>
         <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     </head>
     <body>
+      <header>
+        <div class="container">
+          <h1>NoteShare</h1>
+        </div>
+      </header>
         {{{content}}}
+        <footer>
+          <div class="container">
+            Copyright 2015 Douglas Doner
+          </div>
+        </footer>
     </body>
     <script src="http://localhost:35729/livereload.js"></script>
 </html>
