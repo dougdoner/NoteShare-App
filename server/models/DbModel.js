@@ -5,20 +5,20 @@ var DbModel = Backbone.Model.extend({
     defaults: {
         db: "",
         createTables: {
-            user: "CREATE TABLE IF NOT EXISTS users (userId INT PRIMARY KEY, firstName, lastName, hash, salt)",
-            auth: "authId INT PRIMARY KEY, session, userId INT FOREIGN KEY"
+            user: "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, firstName, lastName, dateCreated, dateUpdated, hash, salt, token)",
+            lists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, dateCreated, dateUpdated)"
         }
     },
-    init: function(dbName, callback) {
+    initialize: function(callback) {
         var self = this; //for binding model to self
-        this.createDB(dbName, function(err) {
+        this.createDB("app.db", function(err) {
             if (err) return console.log(err);
             self.createTables(function(err) {
                 if (err) return console.log(err);
                 console.log("db initialized");
             });
         });
-        callback();
+        if (callback) callback();
     },
     createDB: function(dbName, callback) {
         this.set("db", new sqlite.Database(dbName, function(err) {
@@ -32,6 +32,9 @@ var DbModel = Backbone.Model.extend({
         db.run(tableQuery.user, function(err) {
             if (err) return callback(err);
         });
+        db.run(tableQuery.lists, function(err) {
+            if (err) return callback(err);
+        });
 
         if (callback) callback();
     },
@@ -39,10 +42,10 @@ var DbModel = Backbone.Model.extend({
         var db = this.get("db");
         return db.prepare(statement);
     },
-    userSelectAll: function() {
+    userSelectAll: function(callback) {
         var db = this.get("db");
-        db.run("SELECT * FROM users", function( result) {
-            console.log(result);
+        db.all("SELECT * FROM users", function(err, result) {
+            callback(result);
         });
     }
 });

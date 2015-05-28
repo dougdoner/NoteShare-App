@@ -2,17 +2,23 @@ var hapi = require("hapi");
 var server = new hapi.Server();
 var routes = require("./server/routes");
 var DbModel = require("./server/models/DbModel");
+var AuthModel = require("./server/models/AuthModel");
 
-var db = new DbModel();
+var auth = new AuthModel();
 
 server.connection({
     port: 8080
 });
 
 
-db.init("test.db", function() {
+var db = new DbModel(function() {
     server.start();
-    var prepared = db.prepare("SELECT * FROM users");
+    // var prepared = db.prepare("INSERT INTO users VALUES (NULL, 'Jane', 'Doe', $dateCreated, $dateUpdated, '4e3asalkjhasdfhj', 'hellobacon', 'token')");
+    // prepared.run({
+    //     $dateCreated: Date.now(),
+    //     $dateUpdated: Date.now()
+    // });
+    auth.validate();
 });
 
 server.views({
