@@ -1,11 +1,18 @@
 var hapi = require("hapi");
 var server = new hapi.Server();
 var routes = require("./server/routes");
+var DbModel = require("./server/models/DbModel");
+
+var db = new DbModel();
+
 server.connection({
     port: 8080
 });
 
-server.start();
+
+db.init("test.db", function() {
+    server.start();
+});
 
 server.views({
     path: "views/templates",
