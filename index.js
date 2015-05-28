@@ -12,6 +12,7 @@ server.connection({
 
 db.init("test.db", function() {
     server.start();
+    var prepared = db.prepare("SELECT * FROM users");
 });
 
 server.views({

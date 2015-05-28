@@ -3,10 +3,11 @@ var sqlite = require("sqlite3");
 
 var DbModel = Backbone.Model.extend({
     defaults: {
-        insert: "INSERT INTO $table VALUES ($values);",
-        select: "SELECT $selector FROM $table;",
-        selectWhere: "SELECT $selector FROM $table WHERE $conditions;",
-        db: ""
+        db: "",
+        createTables: {
+            user: "CREATE TABLE IF NOT EXISTS users (userId INT PRIMARY KEY, firstName, lastName, hash, salt)",
+            auth: "authId INT PRIMARY KEY, session, userId INT FOREIGN KEY"
+        }
     },
     init: function(dbName, callback) {
         var self = this; //for binding model to self
@@ -27,8 +28,8 @@ var DbModel = Backbone.Model.extend({
     },
     createTables: function(callback) {
         var db = this.get("db");
-
-        db.run("CREATE TABLE IF NOT EXISTS users (id INT PRIMARY KEY, firstName, lastName, hash, salt)", function(err) {
+        var tableQuery = this.get("createTables");
+        db.run(tableQuery.user, function(err) {
             if (err) return callback(err);
         });
 
@@ -37,6 +38,12 @@ var DbModel = Backbone.Model.extend({
     prepare: function(statement) {
         var db = this.get("db");
         return db.prepare(statement);
+    },
+    userSelectAll: function() {
+        var db = this.get("db");
+        db.run("SELECT * FROM users", function( result) {
+            console.log(result);
+        });
     }
 });
 
