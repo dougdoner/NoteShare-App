@@ -9,6 +9,7 @@
   "author": "Douglas Doner",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.0.0",
     "backbone": "^1.2.0",
     "bcrypt": "^0.8.3",
     "forms": "^1.1.1",

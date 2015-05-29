@@ -5,7 +5,7 @@ var DbModel = Backbone.Model.extend({
     defaults: {
         db: "",
         createTables: {
-            user: "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, firstName, lastName, dateCreated, dateUpdated, hash, salt, token)",
+            user: "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, username, firstName, lastName, dateCreated, dateUpdated, hash, salt, token)",
             lists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, dateCreated, dateUpdated)"
         }
     },

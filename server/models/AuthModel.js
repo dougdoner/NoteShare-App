@@ -1,5 +1,6 @@
 var Backbone = require("backbone");
 var Bcrypt = require("bcrypt");
+var async = require("async");
 var DbModel = require("./DbModel");
 var AuthModel = Backbone.Model.extend({
     defaults: {
@@ -7,20 +8,37 @@ var AuthModel = Backbone.Model.extend({
         salt: "",
         hash: "",
         time: Date.now(),
-        db: {}
+        db: {},
+        users: {}
     },
     initialize: function() {
-        this.set("db", new DbModel());
-    },
-    validate: function(username, password, callback) {
-        var users;
-        var db = this.get("db");
-        db.userSelectAll(function(result) {
-            users = result;
+        var self = this;
+        this.set("db", new DbModel(), function() {
+            var db = self.get("db");
         });
     },
-    genHash: function(password) {
+    validate: function(username, password, callback) {
+        var db = this.get("db");
+        var query = db.prepare("SELECT * FROM users WHERE username = $username");
+        query.get({
+            $username: username
+        }, function(err, user) {
+            if (!user) return callback(null, false);
 
+            console.log("db passwword: " + user.hash);
+            console.log("input password: " + password);
+            Bcrypt.compare(password, user.hash, function(err, result) {
+                if (err) console.log(err, password, user.hash);
+                callback(err, result);
+            });
+        });
+    },
+    genHash: function(password, callback) {
+        Bcrypt.genSalt(10, function(err, salt) {
+            Bcrypt.hash(password, salt, function(err, hash) {
+                callback(null, salt, hash);
+            });
+        });
     }
 });
 
