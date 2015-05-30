@@ -45,7 +45,7 @@ var DbModel = Backbone.Model.extend({
     userSelectAll: function(callback) {
         var db = this.get("db");
         db.all("SELECT * FROM users", function(err, result) {
-            callback(result);
+            callback(null, result);
         });
     }
 });

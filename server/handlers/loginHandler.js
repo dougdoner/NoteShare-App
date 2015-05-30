@@ -20,5 +20,5 @@ var loginForm = forms.create({
 });
 
 module.exports = function(req, reply) {
-    reply.view("login", {title: "NoteShare", pageTitle: "Login", formBody: loginForm.toHTML(), formAction: "/login", formButton: "Login"});
+    reply.view("login", {title: "NoteShare", pageTitle: "Login", formMethod: "POST", formBody: loginForm.toHTML(), formAction: "/login", formButton: "Login"});
 };

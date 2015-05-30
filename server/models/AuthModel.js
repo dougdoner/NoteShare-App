@@ -8,28 +8,21 @@ var AuthModel = Backbone.Model.extend({
         salt: "",
         hash: "",
         time: Date.now(),
-        db: {},
         users: {}
     },
-    initialize: function() {
-        var self = this;
-        this.set("db", new DbModel(), function() {
-            var db = self.get("db");
-        });
-    },
     validate: function(username, password, callback) {
-        var db = this.get("db");
+        var db = new DbModel();
         var query = db.prepare("SELECT * FROM users WHERE username = $username");
         query.get({
             $username: username
         }, function(err, user) {
             if (!user) return callback(null, false);
 
-            console.log("db passwword: " + user.hash);
+            console.log("db password: " + user.hash);
             console.log("input password: " + password);
-            Bcrypt.compare(password, user.hash, function(err, result) {
+            Bcrypt.compare(password, user.hash, function(err, isValid) {
                 if (err) console.log(err, password, user.hash);
-                callback(err, result);
+                callback(err, isValid, {name: user.username});
             });
         });
     },

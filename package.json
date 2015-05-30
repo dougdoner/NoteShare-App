@@ -21,6 +21,7 @@
     "grunt-nodemon": "^0.4.0",
     "handlebars": "^3.0.3",
     "hapi": "^8.5.1",
+    "hapi-auth-basic": "^2.0.0",
     "sqlite3": "^3.0.8"
   }
 }
