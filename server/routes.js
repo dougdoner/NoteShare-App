@@ -1,5 +1,3 @@
-var AuthModel = require("./models/AuthModel");
-
 module.exports = [
         {
             method: "GET",
@@ -7,7 +5,7 @@ module.exports = [
             handler: require("./handlers/indexHandler")
         },
         {
-          method: "GET",
+          method: ["GET", "POST"],
           path: "/login",
           handler: require("./handlers/loginHandler")
         },
@@ -19,13 +17,5 @@ module.exports = [
                     path: "build/"
                 }
             }
-        },
-        {
-            method: "POST",
-            path: "/login",
-            config: {
-                auth: "simple"
-            },
-            handler: require("./handlers/loginPostHandler")
         }
 ];

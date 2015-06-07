@@ -3,6 +3,8 @@ var forms = require("forms");
 var fields = forms.fields;
 var validators = forms.validators;
 var widgets = forms.widgets;
+var AuthModel = require("../models/AuthModel");
+var auth = new AuthModel();
 
 var loginForm = forms.create({
   username: fields.string({
@@ -20,5 +22,23 @@ var loginForm = forms.create({
 });
 
 module.exports = function(req, reply) {
-    reply.view("login", {title: "NoteShare", pageTitle: "Login", formMethod: "POST", formBody: loginForm.toHTML(), formAction: "/login", formButton: "Login"});
+    if (req.method == "post") {
+        console.log("Payload: ", req.payload);
+        console.log("user state: ", req.state);
+        auth.validate(req.payload.username, req.payload.password, function(err, isValid, credentials) {
+            if (err) console.log(err);
+            console.log("is it valid?: " + isValid);
+            if (isValid) {
+                auth.createToken(req.payload.username, function(err, string) {
+                    console.log(string);
+                    return reply.redirect("/").state("user", req.payload.name).state("token", string).state("loggedIn", "true");
+                });
+            } else reply.redirect("/login");
+        });
+    } else {
+        if (req.state.loggedIn != "true") {
+            reply.view("login", {title: "NoteShare", pageTitle: "Login", formMethod: "POST", formBody: loginForm.toHTML(), formAction: "/login", formButton: "Login"});
+        }
+        else reply.redirect("/");
+    }
 };
