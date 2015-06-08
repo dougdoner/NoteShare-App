@@ -3,14 +3,15 @@ var server = new hapi.Server();
 var routes = require("./server/routes");
 var DbModel = require("./server/models/DbModel");
 var AuthModel = require("./server/models/AuthModel");
-var Basic = require("hapi-auth-basic");
 var Bcrypt = require("bcrypt");
+var ListModel = require("./server/models/listModel");
 
 server.connection({
     port: 8000
 });
 
-var db = new DbModel(function() {
+var db = new DbModel(function(err) {
+    if (err) console.log(err);
     server.start();
 });
 

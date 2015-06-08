@@ -14,8 +14,13 @@ module.exports = [
             path: "/assets/{param*}",
             handler: {
                 directory: {
-                    path: "build/"
+                    path: "./build"
                 }
             }
+        },
+        {
+            method: "GET",
+            path: "/note/{id}",
+            handler: require("./handlers/notesHandler")
         }
 ];
