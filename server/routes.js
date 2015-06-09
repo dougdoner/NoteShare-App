@@ -22,5 +22,10 @@ module.exports = [
             method: "GET",
             path: "/note/{id}",
             handler: require("./handlers/notesHandler")
+        },
+        {
+            method: "GET",
+            path: "/notes",
+            handler: require("./handlers/listHandler")
         }
 ];

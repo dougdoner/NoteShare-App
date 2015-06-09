@@ -4,7 +4,7 @@ var routes = require("./server/routes");
 var DbModel = require("./server/models/DbModel");
 var AuthModel = require("./server/models/AuthModel");
 var Bcrypt = require("bcrypt");
-var ListModel = require("./server/models/listModel");
+var NoteModel = require("./server/models/NoteModel");
 
 server.connection({
     port: 8000

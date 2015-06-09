@@ -1,12 +1,12 @@
 //notesHandler.js
 
-var ListModel = require("../models/listModel");
+var NoteModel = require("../models/NoteModel");
 
 module.exports = function(req, reply) {
-    var list = new ListModel();
-    list.load(req.params.id, function(err) {
+    var note = new NoteModel();
+    note.load(req.params.id, function(err) {
         if (err) return reply.view("notes", {message: err, title: "List not found"});
-        console.log(list.toJSON());
-        reply.view("notes", {title: list.get("name"), noteList: list.toJSON()});
+        console.log(note.toJSON());
+        reply.view("notes", {title: note.get("name"), noteList: note.toJSON()});
     });
 };

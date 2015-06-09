@@ -1,13 +1,13 @@
-//ListModel.js
+//NoteModel.js
 var DbModel = require("./DbModel");
 var Backbone = require("backbone");
 
 var db = new DbModel();
 
-var ListModel = Backbone.Model.extend({
+var NoteModel = Backbone.Model.extend({
     defaults: {
         id: null,
-        name: "new list",
+        name: "new Note",
         contents: ""
     },
     load: function(listId, callback) {
@@ -41,4 +41,4 @@ var ListModel = Backbone.Model.extend({
     }
 });
 
-module.exports = ListModel;
+module.exports = NoteModel;

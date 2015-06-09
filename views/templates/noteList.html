@@ -1,0 +1,13 @@
+<div class="container note-container">
+    {{#notes}}
+    <div class="notelist columns-4">
+        <h1>{{name}}</h1>
+        <p>
+            {{contents}}
+        </p>
+        <p>
+            <a href="/note/{{id}}">Link</a>
+        </p>
+    </div>
+    {{/notes}}
+</div>
