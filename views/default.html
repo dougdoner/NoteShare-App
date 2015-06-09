@@ -9,6 +9,20 @@
       <header>
         <div class="container">
           <h1>NoteShare</h1>
+          <nav class="main-nav">
+              <ul>
+                  {{#loggedIn}}
+                  <li>
+                      <a href="/login">Logout</a>
+                  </li>
+                  {{/loggedIn}}
+                  {{^loggedIn}}
+                  <li>
+                      <a href="/login">Login</a>
+                  </li>
+                  {{/loggedIn}}
+              </ul>
+          </nav>
         </div>
       </header>
         {{{content}}}
