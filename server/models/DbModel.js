@@ -6,8 +6,8 @@ var DbModel = Backbone.Model.extend({
         db: "",
         createTables: {
             user: "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, username, firstName, lastName, dateCreated, dateUpdated, hash, salt, token);",
-            noteLists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, contents, dateCreated, dateUpdated);",
-
+            noteLists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, contents, dateCreated, dateUpdated, userId INTEGER, FOREIGN KEY(userId) REFERENCES users(userId));",
+            noteItems: "CREATE TABLE IF NOT EXISTS items (itemId INTEGER PRIMARY KEY AUTOINCREMENT, name, contents, status, dateCreated, dateUpdated, listId INTEGER, FOREIGN KEY(listId) REFERENCES lists(listId));"
         }
     },
     initialize: function(callback) {
@@ -31,6 +31,7 @@ var DbModel = Backbone.Model.extend({
     createTables: function(callback) {
         var db = this.get("db");
         callback = callback || function() {};
+        callback = callback || function() {};
         var tableQuery = this.get("createTables");
         db.run(tableQuery.user, function(err) {
             if (err) return callback(err);
@@ -38,8 +39,10 @@ var DbModel = Backbone.Model.extend({
         db.run(tableQuery.noteLists, function(err) {
             if (err) return callback(err);
         });
-
-        if (callback) callback();
+        db.run(tableQuery.noteItems, function(err) {
+            if (err) return callback(err);
+        });
+        callback(null);
     },
     prepare: function(statement) {
         var db = this.get("db");

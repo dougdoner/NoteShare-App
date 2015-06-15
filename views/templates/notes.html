@@ -5,9 +5,15 @@
   <h2>
       {{noteList.name}}
   </h2>
-  <p>
-      {{noteList.contents}}
-  </p>
+  {{#noteList.items}}
+    <ul>
+        <li class="{{status}} {{id}}">
+            {{name}}
+        </li>
+    </ul>
+
+
+  {{/noteList.items}}
   <p>
       <a href="/notes">back to list</a>
   </p>
