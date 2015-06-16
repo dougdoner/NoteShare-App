@@ -19,6 +19,7 @@ var NoteModel = Backbone.Model.extend({
             var statement = db.prepare("SELECT * FROM lists WHERE listId = $id"); statement.get({
                 $id: listId
             }, function(err, result) {
+                statement.finalize();
                 if (err) return callback(err);
                 if (!result) return callback("empty result");
                 self.set("id", result.listId);
@@ -39,9 +40,10 @@ var NoteModel = Backbone.Model.extend({
             $updated: Date.now(),
             $userId: userid
         }, function(err) {
+            insert.finalize();
             if (err) return callback(err);
+            callback(null);
         });
-        callback(null);
     }
 });
 

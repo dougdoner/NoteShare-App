@@ -19,6 +19,7 @@ var ItemModel = Backbone.Model.extend({
         statement.get({
             $itemId: id
         }, function(err, result) {
+            statement.finalize();
             if (err) return callback(err);
             if (!result) return callback("no result");
             self.set("id", result.id);
@@ -29,18 +30,18 @@ var ItemModel = Backbone.Model.extend({
             callback(null);
         });
     },
-    create: function(callback) {
+    create: function(listId, callback) {
         var self = this;
         callback = callback || function() {};
         var data = this.toJSON();
-        console.log(this.toJSON());
         var statement = db.prepare("INSERT INTO items(name, contents, status, listId) VALUES($name, $contents, $status, $listId)");
         statement.run({
             $name: data.name,
             $contents: data.contents,
             $status: data.status,
-            $listId: data.noteId
+            $listId: listId
         }, function(err) {
+            statement.finalize();
             if (err) return callback(err);
             callback(null);
         });

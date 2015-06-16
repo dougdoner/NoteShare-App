@@ -27,5 +27,15 @@ module.exports = [
             method: "GET",
             path: "/notes",
             handler: require("./handlers/listHandler")
-        }
+        },
+        {
+          method: ["GET", "POST"],
+          path: "/note/create",
+          handler: require("./handlers/noteAdd")
+      },
+      {
+        method: "POST",
+        path: "/note/{id}/create",
+        handler: require("./handlers/itemAdd")
+      }
 ];

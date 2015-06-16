@@ -1,20 +1,20 @@
 <div class="container">
-  <p>
-      {{message}}
-  </p>
-  <h2>
-      {{noteList.name}}
-  </h2>
-  {{#noteList.items}}
-    <ul>
-        <li class="{{status}} {{id}}">
-            {{name}}
-        </li>
-    </ul>
-
-
-  {{/noteList.items}}
-  <p>
-      <a href="/notes">back to list</a>
-  </p>
+    <div class="columns-8">
+        <p>
+            {{message}}
+        </p>
+        <ul>
+        {{#noteList.items}}
+              <li class="{{status}} {{id}}">
+                  {{name}}
+              </li>
+        {{/noteList.items}}
+        </ul>
+        <form method="POST" action="{{action}}">
+            <input class="new-note"  data-id="{{noteId}}" type="text" name="itemName" placeholder="Item Name">
+        </form>
+        <p>
+            <a href="/notes">back to list</a>
+        </p>
+    </div>
 </div>

@@ -7,6 +7,6 @@ module.exports = function(req, reply) {
     note.load(req.params.id, function(err) {
         if (err) return reply.view("notes", {message: err, title: "List not found"});
         console.log("Contents of note.toJSON(): ", note.toJSON());
-        reply.view("notes", {title: note.get("name"), noteList: note.toJSON()});
+        reply.view("notes", {action: "/note/" + req.params.id + "/create", title: note.get("name"), noteList: note.toJSON(), noteId: req.params.id});
     });
 };
