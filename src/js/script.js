@@ -1,9 +1,14 @@
 $(".itemAdd").on("submit", function(e) {
     var $this = $(this);
     var input = $this.find("input");
+    var listId = input.data("id");
     $.ajax({
-        url: input.data("noteId"),
-        data: {itemName: input.val()}
+        url:  "/note/" + input.data("id") + "/create",
+        type: "POST",
+        data: {
+            itemName: input.val(),
+            id: listId
+        }
     })
     .done(function(data) {
         console.log(data);
