@@ -3,7 +3,7 @@ var Backbone = require("backbone");
 var ItemModel = require("./ItemModel");
 var DbModel = require("./DbModel");
 
-var db = new DbModel();
+var db = require("../../Db");
 
 var ItemList = Backbone.Collection.extend({
     model: ItemModel,

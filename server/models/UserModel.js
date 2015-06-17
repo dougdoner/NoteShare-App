@@ -1,7 +1,7 @@
 var Backbone = require("backbone");
 var DbModel = require("./DbModel");
 var AuthModel = require("./AuthModel");
-var db = new DbModel();
+var db = require("../../Db");
 var auth = new AuthModel();
 
 var UserModel = Backbone.Model.extend({

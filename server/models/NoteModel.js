@@ -3,7 +3,7 @@ var DbModel = require("./DbModel");
 var Backbone = require("backbone");
 var ItemList = require("./ItemList");
 
-var db = new DbModel();
+var db = require("../../Db");
 
 var NoteModel = Backbone.Model.extend({
     defaults: {

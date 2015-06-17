@@ -1,7 +1,9 @@
 var Backbone = require("backbone");
 var Bcrypt = require("bcrypt");
 var async = require("async");
-var DbModel = require("./DbModel");
+var Db = require("../../Db");
+var hasha = require("hasha");
+
 var AuthModel = Backbone.Model.extend({
     defaults: {
         user: "",
@@ -12,7 +14,7 @@ var AuthModel = Backbone.Model.extend({
         db: {}
     },
     initialize: function() {
-        this.set("db", new DbModel());
+        this.set("db", Db);
     },
     validate: function(username, password, callback) {
         var db = this.get("db");
@@ -38,17 +40,16 @@ var AuthModel = Backbone.Model.extend({
     },
     createToken: function(username, callback) {
         var db = this.get("db");
-        var stringChoice = "FHLKSEHLKFNhlksfh83hnlshflh27gr9bnjk2873hr2lk3hrkj2b3kjrbh23hfoui2h3oifh2bh3jkfhoui2h3fuoi89";
-        var randString = "";
-        for (var i = 0; i < 6; i++) {
-            randString += stringChoice.charAt(Math.floor((Math.random() * 92)));
-        }
+        var hashedToken = hasha(username);
         var statement = db.prepare("UPDATE users SET token = $token WHERE username = $username");
         statement.run({
-            $token: randString,
+            $token: hashedToken,
             $username: username
-        }, function(err) {console.log("query done"); });
-        callback(null, randString);
+        }, function(err) {
+            if (err) return callback(err);
+            console.log("query done");
+            callback(null, hashedToken);
+        });
     }
 });
 

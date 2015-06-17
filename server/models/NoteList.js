@@ -1,9 +1,8 @@
 // NoteList.js
 var Backbone = require("backbone");
 var NoteModel = require("./NoteModel");
-var DbModel = require("./DbModel");
 
-var db = new DbModel();
+var db = require("../../Db");
 
 var NoteList = Backbone.Collection.extend({
     model: NoteModel,

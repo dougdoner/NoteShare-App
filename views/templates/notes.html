@@ -3,6 +3,7 @@
         <p>
             {{message}}
         </p>
+        <h2>{{noteList.name}}</h2>
         <ul>
         {{#noteList.items}}
               <li class="{{status}} {{id}}">
@@ -10,7 +11,7 @@
               </li>
         {{/noteList.items}}
         </ul>
-        <form method="POST" action="{{action}}">
+        <form class="itemAdd" method="POST" action="{{action}}">
             <input class="new-note"  data-id="{{noteId}}" type="text" name="itemName" placeholder="Item Name">
         </form>
         <p>

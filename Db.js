@@ -22,15 +22,15 @@ var Db = {
         });
     },
     createDB: function(dbName, callback) {
-        values.db = new sqlite.Database(dbName, function(err) {
+        this.values.db = new sqlite.Database(dbName, function(err) {
             if (err) return callback(err);
             callback(null);
         });
     },
     createTables: function(callback) {
-        var db = values.db;
+        var db = this.values.db;
         callback = callback || function() {};
-        var tableQuery = values.createTables;
+        var tableQuery = this.values.createTables;
         db.run(tableQuery.user, function(err) {
             if (err) return callback(err);
             db.run(tableQuery.noteLists, function(err) {
@@ -44,11 +44,11 @@ var Db = {
 
     },
     prepare: function(statement) {
-        var db = values.db;
+        var db = this.values.db;
         return db.prepare(statement);
     },
     userSelectAll: function(callback) {
-        var db = values.db;
+        var db = this.values.db;
         db.all("SELECT * FROM users", function(err, result) {
             if (err) return callback(err);
             callback(null, result);

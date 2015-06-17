@@ -1,3 +1,3 @@
 module.exports = function(req, reply) {
-    reply.view("index", {title: "Home"});
+    reply.view("index", {title: "Home", loggedIn: req.state.loggedIn});
 };

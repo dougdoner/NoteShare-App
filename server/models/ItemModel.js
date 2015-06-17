@@ -1,8 +1,7 @@
 //ItemModel.js
 var DbModel = require("./DbModel");
 var Backbone = require("backbone");
-
-var db = new DbModel();
+var db = require("../../Db");
 
 var ItemModel = Backbone.Model.extend({
     defaults: {

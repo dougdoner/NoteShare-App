@@ -42,5 +42,10 @@ module.exports = [
       method: ["GET", "POST"],
       path: "/register",
       handler: require("./handlers/register")
+    },
+    {
+      method: "GET",
+      path: "/logout",
+      handler: require("./handlers/logout")
     }
 ];
