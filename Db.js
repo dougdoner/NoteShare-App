@@ -5,8 +5,8 @@ var Db = {
         db: "",
         createTables: {
             user: "CREATE TABLE IF NOT EXISTS users (userId INTEGER PRIMARY KEY AUTOINCREMENT, username, firstName, lastName, dateCreated, dateUpdated, hash, salt, token);",
-            noteLists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, contents, dateCreated, dateUpdated, userId INTEGER, FOREIGN KEY(userId) REFERENCES users(userId));",
-            noteItems: "CREATE TABLE IF NOT EXISTS items (itemId INTEGER PRIMARY KEY AUTOINCREMENT, name, contents, status, dateCreated, dateUpdated, listId INTEGER, FOREIGN KEY(listId) REFERENCES lists(listId));"
+            noteLists: "CREATE TABLE IF NOT EXISTS lists (listId INTEGER PRIMARY KEY AUTOINCREMENT, listName, contents, dateCreated, dateUpdated, userId INTEGER, FOREIGN KEY(userId) REFERENCES users(userId) ON DELETE CASCADE);",
+            noteItems: "CREATE TABLE IF NOT EXISTS items (itemId INTEGER PRIMARY KEY AUTOINCREMENT, name, contents, status, dateCreated, dateUpdated, listId INTEGER, FOREIGN KEY(listId) REFERENCES lists(listId) ON DELETE CASCADE);"
         }
     },
     init: function(callback) {
@@ -29,19 +29,23 @@ var Db = {
     },
     createTables: function(callback) {
         var db = this.values.db;
+        var self = this;
         callback = callback || function() {};
-        var tableQuery = this.values.createTables;
-        db.run(tableQuery.user, function(err) {
+        //implement async waterfall here
+        db.run("PRAGMA foreign_keys = ON;", function(err) {
             if (err) return callback(err);
-            db.run(tableQuery.noteLists, function(err) {
+            var tableQuery = self.values.createTables;
+            db.run(tableQuery.user, function(err) {
                 if (err) return callback(err);
-                db.run(tableQuery.noteItems, function(err) {
+                db.run(tableQuery.noteLists, function(err) {
                     if (err) return callback(err);
-                    callback(null);
+                    db.run(tableQuery.noteItems, function(err) {
+                        if (err) return callback(err);
+                        callback(null);
+                    });
                 });
             });
         });
-
     },
     prepare: function(statement) {
         var db = this.values.db;

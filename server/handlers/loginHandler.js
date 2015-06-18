@@ -31,7 +31,7 @@ module.exports = function(req, reply) {
             if (isValid) {
                 auth.createToken(req.payload.username, function(err, string) {
                     console.log(string);
-                    return reply.redirect("/").state("user", req.payload.name).state("token", string).state("loggedIn", "true");
+                    return reply.redirect("/notes").state("user", req.payload.username).state("token", string).state("loggedIn", "true");
                 });
             } else reply.redirect("/login");
         });
@@ -39,6 +39,6 @@ module.exports = function(req, reply) {
         if (req.state.loggedIn != "true") {
             reply.view("login", {title: "NoteShare", pageTitle: "Login", formMethod: "POST", formBody: loginForm.toHTML(), formAction: "/login", formButton: "Login"});
         }
-        else reply.redirect("/");
+        else reply.redirect("/notes");
     }
 };
