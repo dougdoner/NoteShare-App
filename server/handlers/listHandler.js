@@ -7,6 +7,7 @@ module.exports = function(req, reply) {
     var noteList = new NoteList();
     noteList.loadList(req.state.user, function(err) {
         if (err) return reply.view("note", {message: err});
+        console.log(noteList.toJSON());
         reply.view("noteList", {notes: noteList.toJSON(), title: "notes", loggedIn: req.state.loggedIn});
     });
 };
