@@ -21,7 +21,6 @@ module.exports = function(req, reply) {
     if (req.method == "post") {
         var note = new NoteModel({name: req.payload.noteName});
         var userId = db.prepare("SELECT * FROM users WHERE username = $username");
-        console.log(req.state);
         userId.get({
             $username: req.state.user
         }, function(err, result) {

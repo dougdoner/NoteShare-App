@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-concurrent");
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-autoprefixer");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.initConfig({
         concurrent: {
             dev: {
@@ -33,6 +34,10 @@ module.exports = function(grunt) {
             css: {
                 files: "src/css/**/*.css",
                 tasks: ["autoprefixer"]
+            },
+            js: {
+                files: "src/js/**/*.js",
+                tasks: ["uglify"]
             }
         },
         less: {
@@ -49,7 +54,14 @@ module.exports = function(grunt) {
                 src: "src/css/style.css",
                 dest: "build/css/"
             }
+        },
+        uglify: {
+            dev: {
+                files: {
+                    'build/js/script.js': ["src/js/script.js"]
+                }
+            }
         }
     });
-    grunt.registerTask("default", ["less", "autoprefixer", "concurrent"]);
-}
+    grunt.registerTask("default", ["uglify", "less", "autoprefixer", "concurrent"]);
+};

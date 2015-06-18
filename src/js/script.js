@@ -12,22 +12,12 @@ $(".itemAdd").on("submit", function(e) {
     })
     .done(function(data) {
         console.log(data);
+        var lastId = Number($(".notes").find("li:last").attr("class"));
+        lastId += 1;
+        $(".notes").append("<li class=" + lastId + ">" + data.item.name + "</li>");
     })
     .fail(function() {
         console.log("failure!");
     });
     e.preventDefault();
-});
-
-var item = new ItemModel({
-    name: "Do laundry",
-    contents: "bring detergent",
-    noteId: 2
-});
-
-item.create(function(err) {
-    if (err) {
-        return console.log(err);
-    }
-    console.log("item created");
 });
