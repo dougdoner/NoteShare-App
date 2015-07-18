@@ -44,6 +44,19 @@ var NoteModel = Backbone.Model.extend({
             if (err) return callback(err);
             callback(null);
         });
+    },
+    delete: function(noteId, callback) {
+        var self = this;
+        callback = callback || function() {};
+        var data = self.toJSON();
+        var statement = db.prepare("DELETE FROM lists WHERE listId = $noteId");
+        statement.run({
+            $noteId: noteId
+        }, function(err) {
+            statement.finalize();
+            if (err) return callback(err);
+            callback(null);
+        });
     }
 });
 

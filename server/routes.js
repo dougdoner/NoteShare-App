@@ -47,5 +47,10 @@ module.exports = [
       method: "GET",
       path: "/logout",
       handler: require("./handlers/logout")
+    },
+    {
+      method: "GET",
+      path: "/note/{id}/delete",
+      handler: require("./handlers/noteDelete")
     }
 ];
