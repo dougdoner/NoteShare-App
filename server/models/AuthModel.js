@@ -1,5 +1,5 @@
 var Backbone = require("backbone");
-var Bcrypt = require("bcrypt");
+var Bcrypt = require("bcrypt-nodejs");
 var async = require("async");
 var Db = require("../../Db");
 var hasha = require("hasha");
@@ -33,7 +33,7 @@ var AuthModel = Backbone.Model.extend({
     },
     genHash: function(password, callback) {
         Bcrypt.genSalt(10, function(err, salt) {
-            Bcrypt.hash(password, salt, function(err, hash) {
+            Bcrypt.hash(password, salt, null, function(err, hash) {
                 callback(null, salt, hash);
             });
         });
