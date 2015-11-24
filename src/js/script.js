@@ -15,9 +15,12 @@ $(".itemAdd").on("submit", function(e) {
         var lastId = Number($(".notes").find("li:last").attr("class"));
         lastId += 1;
         $(".notes").append("<li class=" + lastId + ">" + data.item.name + "</li>");
+        $(".new-note").val("");
+        $("header").after("<div class=\"alert\"><p>Item Inserted!</p></div>");
+
     })
     .fail(function() {
-        console.log("failure!");
+        $("header").after("<p class=\"alert\">Failed to insert item</p>");
     });
     e.preventDefault();
 });
