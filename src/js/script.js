@@ -24,3 +24,8 @@ $(".itemAdd").on("submit", function(e) {
     });
     e.preventDefault();
 });
+
+$(".nav-collapse-button").click(function(e) {
+    $(".main-nav").find("ul").toggle();
+    e.preventDefault();
+});

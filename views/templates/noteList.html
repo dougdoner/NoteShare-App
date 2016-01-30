@@ -1,13 +1,8 @@
 <div class="container note-container">
     {{#notes}}
     <div class="notelist columns-4">
-        <h1>{{name}}</h1>
-        <p>
-            <a href="/note/{{id}}">Link</a>
-        </p>
-        <p>
-            <a href="/note/{{id}}/delete">Delete Note</a>
-        </p>
+        <a href="/note/{{id}}"><h1>{{name}}</h1></a>
+        <a class="delete-note" href="/note/{{id}}/delete"><i class="fa fa-times-circle"></i></a>    
     </div>
     {{/notes}}
     <div class="notelist columns-4">
