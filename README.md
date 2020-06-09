@@ -1,2 +1,2 @@
-# itc298-final-project
-Final project application for ITC298, Advanced JavaScript
+# NoteShare
+A multi-user, shareable note system written in Node.js
